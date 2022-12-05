@@ -8,10 +8,15 @@ const passportjwt = require("../config/passport-jwt-strategy");
 
 router.post("/", controller.home);
 router.post("/signup", controller.createUser);
-router.get(
+router.post(
 	"/addMember",
 	passport.authenticate("jwt", { session: false }),
 	controller.addMember
+);
+router.get(
+	"/addMember",
+	passport.authenticate("jwt", { session: false }),
+	controller.getMembers
 );
 router.post("/login", controller.login);
 
