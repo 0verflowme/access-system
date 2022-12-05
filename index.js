@@ -12,7 +12,7 @@ var rfs = require("rotating-file-stream");
 
 var accessLogStream = rfs.createStream("access.log", {
 	interval: "1d", // rotate daily
-	path: path.join(__dirname, "log"),
+	path: path.join("/tmp", "log"),
 });
 
 app.use(morgan("combined", { stream: accessLogStream }));
