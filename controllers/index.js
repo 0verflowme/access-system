@@ -41,7 +41,7 @@ function createUser(req, res) {
 						return res.redirect("/signin");
 					}
 					const token = genToken(user);
-					res.status(200).json({ token });
+					return res.status(200).json({ token });
 				});
 			} else {
 				return res.redirect("/signin");
@@ -57,9 +57,22 @@ function addMember(req, res) {
 		});
 	}
 }
+async function login(req, res) {
+	const { email, password } = req.body;
+	const user = await User.findOne({ email: email });
+	if (user && (await user.isValidPassword(password))) {
+		const token = genToken(user);
+		return res.status(200).json({ token });
+	} else {
+		return res.status(200).json({
+			message: "Invalid User/Password",
+		});
+	}
+}
 
 module.exports = {
 	home,
 	createUser,
 	addMember,
+	login,
 };

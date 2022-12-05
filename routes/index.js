@@ -13,5 +13,6 @@ router.get(
 	passport.authenticate("jwt", { session: false }),
 	controller.addMember
 );
+router.post("/login", controller.login);
 
 module.exports = router;
