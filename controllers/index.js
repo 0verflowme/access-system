@@ -2,9 +2,8 @@ const User = require("../models/user");
 const jwt = require("jsonwebtoken");
 
 function home(req, res) {
-	console.log(req.body);
 	return res.status(200).json({
-		message: "hello",
+		message: "Home page of Access system",
 	});
 }
 
