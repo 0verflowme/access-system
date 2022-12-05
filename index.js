@@ -5,6 +5,18 @@ const app = express();
 const passport = require("passport");
 const passportJWT = require("./config/passport-jwt-strategy");
 
+// for logging
+var morgan = require("morgan");
+var path = require("path");
+var rfs = require("rotating-file-stream");
+
+var accessLogStream = rfs.createStream("access.log", {
+	interval: "1d", // rotate daily
+	path: path.join(__dirname, "log"),
+});
+
+app.use(morgan("combined", { stream: accessLogStream }));
+
 const routes = require("./routes");
 
 const session = require("express-session");
