@@ -91,6 +91,18 @@ async function getMembers(req, res) {
 		users: user,
 	});
 }
+async function dashboard(req, res) {
+	console.log(req.user);
+	const user = await User.findById(req.user.id);
+	return res.status(200).json({
+		"Your dashboard": user,
+	});
+}
+function billing(req, res) {
+	return res.status(200).json({
+		billing: "Dummy data",
+	});
+}
 
 module.exports = {
 	home,
@@ -98,4 +110,6 @@ module.exports = {
 	addMember,
 	login,
 	getMembers,
+	dashboard,
+	billing,
 };

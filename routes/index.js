@@ -17,5 +17,15 @@ router.get(
 	controller.getMembers
 );
 router.post("/login", controller.login);
+router.get(
+	"/dashboard",
+	passport.authenticate("jwt", { session: false }),
+	controller.dashboard
+);
+router.get(
+	"/billing",
+	passport.authenticate("jwt", { session: false }),
+	controller.billing
+);
 
 module.exports = router;
