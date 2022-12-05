@@ -4,7 +4,7 @@ const controller = require("../controllers/index");
 const passport = require("passport");
 const passportjwt = require("../config/passport-jwt-strategy");
 
-router.post("/", controller.home);
+router.get("/", controller.home);
 router.post("/signup", controller.createUser);
 router.post(
 	"/addMember",
