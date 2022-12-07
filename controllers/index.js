@@ -21,6 +21,7 @@ genToken = (user) => {
 };
 
 function createUser(req, res) {
+	// console.log(req.body)
 	if (req.body.password !== req.body.confirm_password) {
 		return res.redirect("back");
 	}
@@ -40,7 +41,7 @@ function createUser(req, res) {
 						return res.redirect("/login");
 					}
 					const token = genToken(user);
-					return res.status(200).json({ token });
+					return res.status(200).json({ token, isAdmin: user.isAdmin });
 				});
 			} else {
 				return res.redirect("/login");
@@ -76,7 +77,7 @@ async function login(req, res) {
 	const user = await User.findOne({ email: email });
 	if (user && (await user.isValidPassword(password))) {
 		const token = genToken(user);
-		return res.status(200).json({ token });
+		return res.status(200).json({ token, isAdmin: user.isAdmin });
 	} else {
 		return res.status(200).json({
 			message: "Invalid User/Password",
@@ -85,13 +86,14 @@ async function login(req, res) {
 }
 
 async function getMembers(req, res) {
-	const user = await User.find();
-	return res.status(200).json({
-		users: user,
-	});
+	if (req.user.isAdmin) {
+		const user = await User.find();
+		return res.status(200).json({
+			users: user,
+		});
+	}
 }
 async function dashboard(req, res) {
-	console.log(req.user);
 	const user = await User.findById(req.user.id);
 	return res.status(200).json({
 		"Your dashboard": user,
